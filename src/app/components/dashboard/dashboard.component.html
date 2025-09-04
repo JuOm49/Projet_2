@@ -23,14 +23,6 @@
             </mat-card>
         </div>
 
-        <!-- <ngx-charts-pie-chart
-            [results]="pieData"
-            [legend]="false"
-            [labels]="true"
-            [doughnut]="false"
-            [explodeSlices]="false"
-            [view]="[500,400]">
-        </ngx-charts-pie-chart> -->
+        <div echarts [options]="pieOption" class="pie-chart" (chartClick)="onPieClick($event)"></div>    
     </ng-container>
 </main>
-

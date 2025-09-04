@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { filter, Observable, of, take, tap } from 'rxjs';
 
+import { EChartsOption } from 'echarts';
+
 import { OlympicService } from '@core/services/olympic.service';
 import { Olympic } from '@core/models/Olympic';
 import { MedalsPerCountry } from '@app/core/models/MedalsPerCountry';
@@ -22,16 +24,17 @@ export class DashboardComponent {
   public numberOfJos: number = 0;
   public olympics: Olympic[] = [];
   public medalsPerCountry: MedalsPerCountry[] = [];
-  pieData = [
-  { name: 'France', value: 42 },
-  { name: 'USA', value: 37 },
-  { name: 'Japon', value: 28 }
-];
+
+  pieOption!: EChartsOption;
 
   constructor(private olympicService: OlympicService) {}
     
   ngOnInit(): void {
     this.getOlympicsInformations();
+  }
+
+  onPieClick(event: any): void {
+    console.log('Pie chart clicked:', event);
   }
 
   private getOlympicsInformations(): void {
@@ -50,7 +53,22 @@ export class DashboardComponent {
               participation => participation.year));
           // Set permet de ne garder que les années uniques
           this.numberOfJos = new Set(years).size;
-          //this.pieDataFromOlympics(olympics);
+          this.pieDataFromOlympics(olympics);
+
+          //medalsPerCountry est un tableau d'objets avec le nom du pays et le nombre de médailles pour affichage dans le graphique
+          this.pieOption = {
+            tooltip: { trigger: 'item' as const },
+            series: [
+            {
+              type: 'pie',
+              radius: '50%',
+              data: [
+                ...this.medalsPerCountry
+              ]
+            }
+            ]
+          };
+          
         }
       })
     ).subscribe();

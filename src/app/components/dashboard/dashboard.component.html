@@ -1,4 +1,4 @@
-<hr />
+<!-- <hr />
 <p>{{ (olympics$ | async)?.length}} data loaded</p>
 <ng-container *ngIf="(olympics$ | async)?.length !== 0">
   <div *ngFor="let olympic of olympics$ | async">
@@ -7,4 +7,35 @@
         <p>{{participation.year}} - {{participation.city}} - médailles obtenues: {{participation.medalsCount}} en {{participation.year}} - nbr d'athlètes: {{ participation.athleteCount }}</p>
     </div>
   </div>
-</ng-container>
+</ng-container> -->
+<main>
+    <ng-container *ngIf="olympics.length !== 0">
+    
+    <h2>{{title}}</h2>
+    <div class="card-content-row">
+        <mat-card>
+                <div>{{ numberOfJosText }}</div>
+                <div class="bold">{{ numberOfJos }}</div>
+        </mat-card>
+        <mat-card>
+                <div>{{ numberOfCountriesText }}</div>
+                <div class="bold">{{ numberOfCountries }}</div>
+        </mat-card>
+    </div>
+
+
+    <!-- <mat-card>
+        <div class="card-content-row">
+            <mat-card-content class="card-box">
+                <div>{{ numberOfJosText }}</div>
+                <div>{{ numberOfJos }}</div>
+            </mat-card-content>
+            <mat-card-content class="card-box">
+                <div>{{ numberOfCountriesText }}</div>
+                <div>{{ numberOfCountries }}</div>
+            </mat-card-content>
+        </div>
+    </mat-card> -->
+    </ng-container>
+</main>
+

@@ -12,7 +12,7 @@ import { NotFoundComponent } from '@components/not-found/not-found.component';
 
 @NgModule({
   declarations: [AppComponent, DashboardComponent, DashboardDetailsComponent, NotFoundComponent],
-  imports: [CommonModule, BrowserModule, AppRoutingModule, MatCardModule,  HttpClientModule],
+  imports: [CommonModule, BrowserModule, AppRoutingModule, MatCardModule, HttpClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })

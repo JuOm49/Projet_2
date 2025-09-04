@@ -4,6 +4,7 @@ import { filter, Observable, of, take, tap } from 'rxjs';
 
 import { OlympicService } from '@core/services/olympic.service';
 import { Olympic } from '@core/models/Olympic';
+import { MedalsPerCountry } from '@app/core/models/MedalsPerCountry';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,12 @@ export class DashboardComponent {
   public numberOfCountries: number = 0;
   public numberOfJos: number = 0;
   public olympics: Olympic[] = [];
+  public medalsPerCountry: MedalsPerCountry[] = [];
+  pieData = [
+  { name: 'France', value: 42 },
+  { name: 'USA', value: 37 },
+  { name: 'Japon', value: 28 }
+];
 
   constructor(private olympicService: OlympicService) {}
     
@@ -43,8 +50,18 @@ export class DashboardComponent {
               participation => participation.year));
           // Set permet de ne garder que les années uniques
           this.numberOfJos = new Set(years).size;
+          //this.pieDataFromOlympics(olympics);
         }
       })
     ).subscribe();
+  }
+
+  private pieDataFromOlympics(olympics: Olympic[]): void {
+    this.medalsPerCountry = olympics.map(olympic => {
+      return {
+        name: olympic.country,
+        value: olympic.participations.reduce((sum, participation) => sum + participation.medalsCount, 0)
+      };
+    });
   }
 }

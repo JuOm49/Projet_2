@@ -8,17 +8,19 @@ main {
     padding: 20px;
     max-width: 800px;
     margin: auto;
+
+    h2 {
+        padding: 10px 20px;
+        background-color: rgb(18, 140, 154);
+        color: white;
+        border-radius: 10px;
+        font-family: 'Roboto', Arial;
+        font-weight: 100;
+        letter-spacing: 2px;
+    }
 }
 
-h2 {
-    padding: 10px 20px;
-    background-color: rgb(18, 140, 154);
-    color: white;
-    border-radius: 10px;
-    font-family: 'Roboto', Arial;
-    font-weight: 100;
-    letter-spacing: 2px;
-}
+
 
 .card-content-row {
     width: 80%;
@@ -26,21 +28,22 @@ h2 {
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
-}
 
-mat-card {
-    width: 30%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    margin: 20px 2em;
-    padding: 10px 0px;    
-    border: 1px solid rgb(19, 116, 125);
-    border-radius: 10px;
-    text-align: center;
-    color: grey;
+    mat-card {
+        width: 30%;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        margin: 20px 2em;
+        padding: 10px 0px;    
+        border: 1px solid rgb(19, 116, 125);
+        border-radius: 10px;
+        text-align: center;
+        color: grey;
 
-    .bold {
-        font-weight: bold;
+        .bold {
+            font-weight: bold;
+        }
     }
 }
+

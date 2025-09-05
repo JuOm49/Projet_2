@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Router } from '@angular/router';
 
-import { filter, Observable, take, tap } from 'rxjs';
+import { Observable, take, tap } from 'rxjs';
 
 import { EChartsOption } from 'echarts';
 
 import { Olympic } from '@app/core/models/Olympic';
 import { OlympicService } from '@app/core/services/olympic.service';
+import { ICountrySummary } from '@components/interfaces/ICountrySummary.interface';
 
 @Component({
   selector: 'app-dashboard-details',
@@ -16,29 +18,37 @@ import { OlympicService } from '@app/core/services/olympic.service';
 export class DashboardDetailsComponent implements OnInit {
 
   olympicById$!: Observable<Olympic | null | undefined>;
-  public lineOlympic!: EChartsOption;
-  public title!: string;
-  public numberEntriesText: string = 'Number of entries';
-  public totalNumberMedalsText: string = 'Total number medals';
-  public totalNumberAtheletesText: string = 'Total number of athletes';
-  public numberOfEntries: number = 0;
-  public totalNumberMedals: number = 0;
-  public totalNumberAthletes: number = 0;
+  lineOlympic!: EChartsOption;
+  countrySummary: ICountrySummary = {
+    title: '',
+    numberOfEntries: 0,
+    totalNumberMedals: 0,
+    totalNumberAthletes: 0
+  };
 
   private tabYears: number[] = [];
   private seriesData: {value: number, city: string}[] = [];
 
-  constructor(private route: ActivatedRoute, private olympicsService: OlympicService) { }
+  readonly labelsForInterface = {
+    numberEntriesText: 'Number of entries',
+    totalMedalsText: 'Total number medals',
+    totalAthletesText: 'Total number of athletes'
+  };
+
+  constructor(private activatedRoute: ActivatedRoute, private route: Router, private olympicsService: OlympicService) { }
 
   ngOnInit(): void {
-    const countryId: number = +this.route.snapshot.params['id'];
+    const countryId: number = +this.activatedRoute.snapshot.params['id'];
     this.olympicById$ = this.olympicsService.getOlympicById(countryId);
     
 
     this.olympicById$.pipe(
-      filter(olympic => !!olympic),
       take(1),
       tap((olympic) => {
+        if(!olympic) {
+          this.route.navigateByUrl('/not-found');
+          return;
+        }
         this.getOlympicCountryInformation(olympic);
       }
       )
@@ -48,10 +58,10 @@ export class DashboardDetailsComponent implements OnInit {
   getOlympicCountryInformation(olympic: Olympic | null | undefined) {
     if(!olympic) return;
 
-    this.title = olympic?.country;
-    this.numberOfEntries = olympic?.participations.length;
-    this.totalNumberAthletes = olympic?.participations.flatMap(participation => participation.athleteCount).reduce((acc, count) => acc + count, 0);
-    this.totalNumberMedals = olympic?.participations.flatMap(participation => participation.medalsCount).reduce((acc, count) => acc + count, 0);
+    this.countrySummary.title = olympic?.country;
+    this.countrySummary.numberOfEntries = olympic?.participations.length;
+    this.countrySummary.totalNumberAthletes = olympic?.participations.flatMap(participation => participation.athleteCount).reduce((acc, count) => acc + count, 0);
+    this.countrySummary.totalNumberMedals = olympic?.participations.flatMap(participation => participation.medalsCount).reduce((acc, count) => acc + count, 0);
     for (let participation of olympic?.participations || []) {
           this.tabYears.push(participation.year);
           this.seriesData.push({

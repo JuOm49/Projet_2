@@ -9,6 +9,7 @@ import { OlympicService } from '@core/services/olympic.service';
 import { Olympic } from '@core/models/Olympic';
 
 import { CountryMedalsSummary } from '@app/core/models/CountryMedalsSummary';
+import { IOlympicsStats } from '../interfaces/IOlympicsStats.interface';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,15 +17,16 @@ import { CountryMedalsSummary } from '@app/core/models/CountryMedalsSummary';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent {
-  public olympics$: Observable<Olympic[]> = of([]);
-  public title: string = 'Medals per Country';
-  public numberOfCountriesText: string = 'Number of countries';
-  public numberOfJosText: string = 'Number of JOs';
-  public numberOfCountries: number = 0;
-  public numberOfJos: number = 0;
-  public olympics: Olympic[] = [];
-  public medalsPerCountry: CountryMedalsSummary[] = [];
-  public pieCountryMedalsSummary!: EChartsOption;
+  olympics$: Observable<Olympic[]> = of([]);
+  medalsPerCountry: CountryMedalsSummary[] = [];
+  pieCountryMedalsSummary!: EChartsOption;
+  olympicsStats: IOlympicsStats = { numberOfCountries: 0, numberOfJos: 0 };
+
+  readonly labelsForInterface = {
+    title: 'Medals per Country',
+    numberOfCountriesText: 'Number of countries',
+    numberOfJosText: 'Number of JOs'
+  }
 
   constructor(private olympicService: OlympicService, private route: Router) {}
     
@@ -41,16 +43,15 @@ export class DashboardComponent {
       filter(olympics => olympics.length > 0),
       take(1),
       tap((olympics) => {
-          this.olympics = olympics;
           //dans olympic.json, chaque itération correspond à un pays
-          this.numberOfCountries = olympics.length;
+          this.olympicsStats.numberOfCountries = olympics.length;
           // calcul le nombre d'années uniques dans lesquelles les JO ont eu lieu à partir de olympic.json
           //flatMap met à plat le tableau des participations pour chaque pays
           const years = olympics.flatMap(
             olympic => olympic.participations.map(
               participation => participation.year));
           // Set permet de ne garder que les années uniques
-          this.numberOfJos = new Set(years).size;
+          this.olympicsStats.numberOfJos = new Set(years).size;
           this.pieDataFromOlympics(olympics);
 
           //medalsPerCountry est un tableau d'objets avec le nom du pays et le nombre de médailles pour affichage dans le graphique

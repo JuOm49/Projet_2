@@ -1,16 +1,16 @@
 <main>
-    <ng-container *ngIf="olympics.length !== 0">
+    <ng-container *ngIf="this.olympicsStats.numberOfCountries !== 0">
     
-        <h2>{{title}}</h2>
+        <h2>{{labelsForInterface.title}}</h2>
 
         <div class="card-content-row">
             <mat-card>
-                <div>{{ numberOfJosText }}</div>
-                <div class="bold">{{ numberOfJos }}</div>
+                <div>{{ labelsForInterface.numberOfJosText }}</div>
+                <div class="bold">{{ olympicsStats.numberOfJos }}</div>
             </mat-card>
             <mat-card>
-                <div>{{ numberOfCountriesText }}</div>
-                <div class="bold">{{ numberOfCountries }}</div>
+                <div>{{ labelsForInterface.numberOfCountriesText }}</div>
+                <div class="bold">{{ olympicsStats.numberOfCountries }}</div>
             </mat-card>
         </div>
 

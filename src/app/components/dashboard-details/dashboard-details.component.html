@@ -1,18 +1,18 @@
 <main>
-  <h2>{{title}}</h2>
+  <h2>{{countrySummary.title}}</h2>
 
   <div class="card-content-row">
     <mat-card>
-        <div> {{numberEntriesText}} </div>
-        <div class="bold"> {{numberOfEntries}} </div>
+        <div> {{labelsForInterface.numberEntriesText}} </div>
+        <div class="bold"> {{countrySummary.numberOfEntries}} </div>
       </mat-card>
       <mat-card>
-          <div> {{totalNumberMedalsText}} </div>
-          <div class="bold"> {{totalNumberMedals}} </div>
+          <div> {{labelsForInterface.totalMedalsText}} </div>
+          <div class="bold"> {{countrySummary.totalNumberMedals}} </div>
       </mat-card>
       <mat-card>
-          <div> {{totalNumberAtheletesText}} </div>
-          <div class="bold"> {{totalNumberAthletes}} </div>
+          <div> {{labelsForInterface.totalAthletesText}} </div>
+          <div class="bold"> {{countrySummary.totalNumberAthletes}} </div>
       </mat-card>
   </div>
 

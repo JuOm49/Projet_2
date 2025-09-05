@@ -1,1 +1,6 @@
 <p>dashboard-details works!</p>
+
+<div *ngIf="olympicById$ | async as olympic">
+  <h2>{{ olympic.country }}</h2>
+  <p>Year: {{ olympic.id }}</p>
+</div>

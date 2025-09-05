@@ -1,6 +1,24 @@
-<p>dashboard-details works!</p>
+<main>
+  <h2>{{countrySummary.title}}</h2>
 
-<div *ngIf="olympicById$ | async as olympic">
-  <h2>{{ olympic.country }}</h2>
-  <p>Year: {{ olympic.id }}</p>
-</div>
+  <div class="card-content-row">
+    <mat-card>
+        <div> {{labelsForInterface.numberEntriesText}} </div>
+        <div class="bold"> {{countrySummary.numberOfEntries}} </div>
+      </mat-card>
+      <mat-card>
+          <div> {{labelsForInterface.totalMedalsText}} </div>
+          <div class="bold"> {{countrySummary.totalNumberMedals}} </div>
+      </mat-card>
+      <mat-card>
+          <div> {{labelsForInterface.totalAthletesText}} </div>
+          <div class="bold"> {{countrySummary.totalNumberAthletes}} </div>
+      </mat-card>
+  </div>
+
+  <ng-container *ngIf="lineOlympic">
+      <div echarts [options]="lineOlympic" class="line-chart"></div>
+  </ng-container> 
+  <a class="link-return-dashboard" routerLink="/dashboard">{{labelsForInterface.backMedalsPerCountry}}</a>
+</main>
+

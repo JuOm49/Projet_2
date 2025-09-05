@@ -1,17 +1,8 @@
-<!-- <hr />
-<p>{{ (olympics$ | async)?.length}} data loaded</p>
-<ng-container *ngIf="(olympics$ | async)?.length !== 0">
-  <div *ngFor="let olympic of olympics$ | async">
-    <h3>{{ olympic.country}} - id = {{olympic.id}}</h3>
-    <div *ngFor="let participation of olympic.participations">
-        <p>{{participation.year}} - {{participation.city}} - médailles obtenues: {{participation.medalsCount}} en {{participation.year}} - nbr d'athlètes: {{ participation.athleteCount }}</p>
-    </div>
-  </div>
-</ng-container> -->
 <main>
     <ng-container *ngIf="olympics.length !== 0">
     
         <h2>{{title}}</h2>
+
         <div class="card-content-row">
             <mat-card>
                 <div>{{ numberOfJosText }}</div>
@@ -23,6 +14,9 @@
             </mat-card>
         </div>
 
-        <div echarts [options]="pieOption" class="pie-chart" (chartClick)="onPieClick($event)"></div>    
+        <ng-container *ngIf="pieCountryMedalsSummary">
+            <div echarts [options]="pieCountryMedalsSummary" class="pie-chart" (chartClick)="onPieClick($event)"></div>
+        </ng-container>
+        
     </ng-container>
 </main>

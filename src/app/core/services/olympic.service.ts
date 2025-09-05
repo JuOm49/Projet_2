@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { BehaviorSubject } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, filter, map, take, tap } from 'rxjs/operators';
 
 import { Olympic } from '@core/models/Olympic';
 
@@ -30,5 +30,18 @@ export class OlympicService {
 
   getOlympics() {
     return this.olympics$.asObservable();
+  }
+
+  getOlympicById(olympicId: number) {
+    return this.olympics$.pipe(
+      filter(olympics => olympics.length > 0),
+      take(1),
+      map((olympics) => {
+        if(olympics.length !== 0) {
+          return olympics.find(olympic => olympic.id === olympicId);
+        }
+        return null;
+      })
+    )
   }
 }

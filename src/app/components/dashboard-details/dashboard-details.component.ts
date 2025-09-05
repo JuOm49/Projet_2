@@ -27,12 +27,13 @@ export class DashboardDetailsComponent implements OnInit {
   };
 
   private tabYears: number[] = [];
-  private seriesData: {value: number, city: string}[] = [];
+  private seriesData: {value: number, city: string, athletes: number}[] = [];
 
   readonly labelsForInterface = {
     numberEntriesText: 'Number of entries',
     totalMedalsText: 'Total number medals',
-    totalAthletesText: 'Total number of athletes'
+    totalAthletesText: 'Total number of athletes',
+    backMedalsPerCountry: 'Back to medals per country'
   };
 
   constructor(private activatedRoute: ActivatedRoute, private route: Router, private olympicsService: OlympicService) { }
@@ -66,7 +67,8 @@ export class DashboardDetailsComponent implements OnInit {
           this.tabYears.push(participation.year);
           this.seriesData.push({
             value: participation.medalsCount,
-            city: participation.city
+            city: participation.city,
+            athletes: participation.athleteCount
           });
         }
 
@@ -77,7 +79,8 @@ export class DashboardDetailsComponent implements OnInit {
           const param = params[0];
           return `Year : ${param.axisValue}<br>
           Medals : ${param.data.value}<br>
-          City : ${param.data.city}`;
+          City : ${param.data.city}<br>
+          Athletes: ${param.data.athletes}`;
         }
       },
       xAxis: [

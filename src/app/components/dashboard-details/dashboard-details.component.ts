@@ -6,8 +6,8 @@ import { Observable, Subscription, take, tap } from 'rxjs';
 
 import { EChartsOption } from 'echarts';
 
-import { Olympic } from '@app/core/models/Olympic';
-import { OlympicService } from '@app/core/services/olympic.service';
+import { Olympic } from '@core/models/Olympic';
+import { OlympicService } from '@core/services/olympic.service';
 import { ICountrySummary } from '@components/interfaces/ICountrySummary.interface';
 
 @Component({

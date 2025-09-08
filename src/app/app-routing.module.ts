@@ -2,21 +2,20 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { NotFoundComponent } from '@core/not-found/not-found.component';
-import { DashboardComponent } from '@components/dashboard/dashboard.component';
-import { DashboardDetailsComponent } from '@components/dashboard-details/dashboard-details.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
-    component: DashboardComponent,
+    loadChildren: () => import('@components/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: 'dashboard/:id',
-    component: DashboardDetailsComponent,
+    loadChildren: () => import('@components/dashboard-details/dashboard-details.module').then(m => m.DashboardDetailsModule)
   },
   {
     path: '',
-    component: DashboardComponent,
+    redirectTo: 'dashboard',
+    pathMatch: 'full'
   },
   {
     path: '**', // wildcard

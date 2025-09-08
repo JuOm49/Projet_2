@@ -12,10 +12,10 @@ import { LineChart, PieChart} from 'echarts/charts';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
+import { ErrorDataComponent } from "@app/core/components/error-data/error-data.component";
+import { NotFoundComponent } from '@core/not-found/not-found.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
 import { DashboardDetailsComponent } from '@components/dashboard-details/dashboard-details.component';
-import { NotFoundComponent } from '@components/not-found/not-found.component';
-import { ErrorDataComponent } from "@app/core/components/error-data/error-data.component";
 
 echarts.use([PieChart, CanvasRenderer, TooltipComponent, LegendComponent, LineChart, GridComponent]);
 

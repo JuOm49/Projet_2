@@ -15,13 +15,14 @@ import { AppComponent } from '@app/app.component';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
 import { DashboardDetailsComponent } from '@components/dashboard-details/dashboard-details.component';
 import { NotFoundComponent } from '@components/not-found/not-found.component';
+import { ErrorDataComponent } from "@app/core/components/error-data/error-data.component";
 
 echarts.use([PieChart, CanvasRenderer, TooltipComponent, LegendComponent, LineChart, GridComponent]);
 
 @NgModule({
-  declarations: [AppComponent, DashboardComponent, DashboardDetailsComponent, NotFoundComponent],
+  declarations: [AppComponent, DashboardComponent, DashboardDetailsComponent, NotFoundComponent, ErrorDataComponent],
   imports: [
-    NgxEchartsModule.forRoot({echarts }),
+    NgxEchartsModule.forRoot({ echarts }),
     BrowserModule,
     AppRoutingModule,
     MatCardModule,

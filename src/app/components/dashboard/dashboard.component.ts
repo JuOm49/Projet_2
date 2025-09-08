@@ -1,66 +1,79 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { filter, Observable, of, take, tap } from 'rxjs';
+import { filter, Observable, of, take, tap, Subscription } from 'rxjs';
 
-import { EChartsOption } from 'echarts';
+import { ECElementEvent, EChartsOption } from 'echarts';
 
 import { OlympicService } from '@core/services/olympic.service';
 import { Olympic } from '@core/models/Olympic';
-
-import { CountryMedalsSummary } from '@app/core/models/CountryMedalsSummary';
-import { IOlympicsStats } from '../interfaces/IOlympicsStats.interface';
+import { CountryMedalsSummary } from '@core/models/CountryMedalsSummary';
+import { IOlympicsStats } from '@components/interfaces/IOlympicsStats.interface';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.scss'
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit, OnDestroy {
   olympics$: Observable<Olympic[]> = of([]);
+  // Data for the pie chart and statistics
   medalsPerCountry: CountryMedalsSummary[] = [];
   pieCountryMedalsSummary!: EChartsOption;
   olympicsStats: IOlympicsStats = { numberOfCountries: 0, numberOfJos: 0 };
-
   readonly labelsForInterface = {
     title: 'Medals per Country',
     numberOfCountriesText: 'Number of countries',
     numberOfJosText: 'Number of JOs'
   }
 
+  // Subscription for error handling
+  private errorSubscription!: Subscription;
+  errorMsg: string | null = null;
+
   constructor(private olympicService: OlympicService, private route: Router) {}
     
   ngOnInit(): void {
-    this.getOlympicsInformations();
+    this.getErrorSubscription();
+    this.setOlympicsInformations();
   }
 
-  onPieClick(event: any): void {
-    this.route.navigateByUrl(`dashboard/${event.data.id}`);
+  ngOnDestroy(): void {
+    this.errorSubscription.unsubscribe();
   }
 
-  private getOlympicsInformations(): void {
+  onPieClick(event: ECElementEvent): void {
+    if(event.data && event.data !== null && typeof event.data === 'object' && 'id' in event.data){
+      this.route.navigateByUrl(`dashboard/${event.data.id}`);
+    }   
+  }
+
+  // Fetch Olympics data and set statistics and pie chart data
+  private setOlympicsInformations(): void {
     this.olympicService.getOlympics().pipe(
       filter(olympics => olympics.length > 0),
       take(1),
       tap((olympics) => {
-          //dans olympic.json, chaque itération correspond à un pays
+          //in olympic.json, each iteration corresponds to a country
           this.olympicsStats.numberOfCountries = olympics.length;
-          // calcul le nombre d'années uniques dans lesquelles les JO ont eu lieu à partir de olympic.json
-          //flatMap met à plat le tableau des participations pour chaque pays
+          // calculate the number of unique years in which the Olympics took place from olympic.json
+          //flatMap flattens the array of participations for each country
           const years = olympics.flatMap(
             olympic => olympic.participations.map(
               participation => participation.year));
-          // Set permet de ne garder que les années uniques
+          // Set stores only unique values
           this.olympicsStats.numberOfJos = new Set(years).size;
-          this.pieDataFromOlympics(olympics);
+          this.setPieDataFromOlympics(olympics);
 
-          //medalsPerCountry est un tableau d'objets avec le nom du pays et le nombre de médailles pour affichage dans le graphique
-          this.getPieCountriesMedalsSummary();
+          //medalsPerCountry is an array of objects with the country name and the number of medals
+          //for display in the chart
+          this.setPieCountriesMedalsSummary();
       })
     ).subscribe();
   }
 
-  private pieDataFromOlympics(olympics: Olympic[]): void {
+  // Transform the data from the Olympic array to the format needed for the pie chart
+  private setPieDataFromOlympics(olympics: Olympic[]): void {
     this.medalsPerCountry = olympics.map(olympic => {
       return {
         id: olympic.id,
@@ -70,7 +83,8 @@ export class DashboardComponent {
     });
   }
 
-  private getPieCountriesMedalsSummary(): void {
+  // Configure the pie chart options and data
+  private setPieCountriesMedalsSummary(): void {
     this.pieCountryMedalsSummary = {
       tooltip: { 
         trigger: 'item' as const,
@@ -93,10 +107,22 @@ export class DashboardComponent {
           type: 'pie',
           radius: '50%',
           data: [
+            // Use the spread operator to pass each object from medalsPerCountry as a separate element
+            // in the data array.
+            // Without the spread, data would be a single-element array containing the entire
+            // medalsPerCountry array, which is not the expected format for the pie chart.
             ...this.medalsPerCountry
           ]
         }
       ]
     };
+  }
+
+  private getErrorSubscription(): void {
+    this.errorSubscription = this.olympicService.getErrorData().subscribe(error => {
+      if (error) {
+        this.errorMsg = error;
+      }
+    });
   }
 }

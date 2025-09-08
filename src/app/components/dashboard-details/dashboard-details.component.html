@@ -1,8 +1,9 @@
 <main>
-  <h2>{{countrySummary.title}}</h2>
+  <ng-container *ngIf="!errorMsg; else noDataTemplate">
+    <h2>{{countrySummary.title}}</h2>
 
-  <div class="card-content-row">
-    <mat-card>
+    <div class="card-content-row">
+      <mat-card>
         <div> {{labelsForInterface.numberEntriesText}} </div>
         <div class="bold"> {{countrySummary.numberOfEntries}} </div>
       </mat-card>
@@ -14,11 +15,16 @@
           <div> {{labelsForInterface.totalAthletesText}} </div>
           <div class="bold"> {{countrySummary.totalNumberAthletes}} </div>
       </mat-card>
-  </div>
+    </div>
 
-  <ng-container *ngIf="lineOlympic">
+    <ng-container *ngIf="lineOlympic">
       <div echarts [options]="lineOlympic" class="line-chart"></div>
-  </ng-container> 
-  <a class="link-return-dashboard" routerLink="/dashboard">{{labelsForInterface.backMedalsPerCountry}}</a>
+    </ng-container> 
+    <a class="link-return-dashboard" routerLink="/dashboard">{{labelsForInterface.backMedalsPerCountry}}</a>
+  </ng-container>
+  
+  <ng-template #noDataTemplate>
+      <app-error-data [errorMsg]="errorMsg"></app-error-data>
+  </ng-template>
 </main>
 

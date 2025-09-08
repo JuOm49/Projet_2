@@ -1,22 +1,26 @@
 <main>
-    <ng-container *ngIf="this.olympicsStats.numberOfCountries !== 0">
-    
-        <h2>{{labelsForInterface.title}}</h2>
+    <ng-container *ngIf="!errorMsg; else noDataTemplate">
+        <ng-container *ngIf="olympicsStats.numberOfCountries !== 0">
+            <h2>{{labelsForInterface.title}}</h2>
 
-        <div class="card-content-row">
-            <mat-card>
-                <div>{{ labelsForInterface.numberOfJosText }}</div>
-                <div class="bold">{{ olympicsStats.numberOfJos }}</div>
-            </mat-card>
-            <mat-card>
-                <div>{{ labelsForInterface.numberOfCountriesText }}</div>
-                <div class="bold">{{ olympicsStats.numberOfCountries }}</div>
-            </mat-card>
-        </div>
+            <div class="card-content-row">
+                <mat-card>
+                    <div>{{ labelsForInterface.numberOfJosText }}</div>
+                    <div class="bold">{{ olympicsStats.numberOfJos }}</div>
+                </mat-card>
+                <mat-card>
+                    <div>{{ labelsForInterface.numberOfCountriesText }}</div>
+                    <div class="bold">{{ olympicsStats.numberOfCountries }}</div>
+                </mat-card>
+            </div>
 
-        <ng-container *ngIf="pieCountryMedalsSummary">
-            <div echarts [options]="pieCountryMedalsSummary" class="pie-chart" (chartClick)="onPieClick($event)"></div>
+            <ng-container *ngIf="pieCountryMedalsSummary">
+                <div echarts [options]="pieCountryMedalsSummary" class="pie-chart" (chartClick)="onPieClick($event)"></div>
+            </ng-container>
         </ng-container>
-        
     </ng-container>
+    
+    <ng-template #noDataTemplate>
+        <app-error-data [errorMsg]="errorMsg"></app-error-data>
+    </ng-template>
 </main>

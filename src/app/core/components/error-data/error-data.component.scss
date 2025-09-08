@@ -1,0 +1,19 @@
+.no-data-message{
+    margin: 20px;
+    font-size: 1.4em;
+    color: red;
+    font-weight: bold;
+    text-align: center;
+}
+
+// Ajoute ceci pour le format mobile
+@media (max-width: 600px) {
+    .no-data-message {
+        width: 100vw;
+        margin-left: 15vw;
+        margin-right: 15vw;
+        margin-top: 20px;
+        margin-bottom: 20px;
+        font-size: 0.8em;
+    }
+}

@@ -19,6 +19,7 @@
 
     <ng-container *ngIf="lineOlympic">
       <div echarts [options]="lineOlympic" class="line-chart"></div>
+      <div class="caption">{{labelsForInterface.dates}}</div>
     </ng-container> 
     <a class="link-return-dashboard" routerLink="/dashboard">{{labelsForInterface.backMedalsPerCountry}}</a>
   </ng-container>

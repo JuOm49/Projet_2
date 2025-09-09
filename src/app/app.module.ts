@@ -5,7 +5,7 @@ import { RouterLink } from '@angular/router';
 
 import { AppRoutingModule } from '@app/app-routing.module';
 import { AppComponent } from '@app/app.component';
-import { NotFoundComponent } from '@core/not-found/not-found.component';
+import { NotFoundComponent } from '@core/components/not-found/not-found.component';
 
 @NgModule({
   declarations: [AppComponent, NotFoundComponent],

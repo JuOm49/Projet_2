@@ -30,7 +30,8 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
     numberEntriesText: 'Number of entries',
     totalMedalsText: 'Total number medals',
     totalAthletesText: 'Total number of athletes',
-    backMedalsPerCountry: 'Back to medals per country'
+    backMedalsPerCountry: 'Back to medals per country',
+    dates: 'Dates'
   };
 
   // for the chart

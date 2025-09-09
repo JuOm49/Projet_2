@@ -8,7 +8,7 @@ import { ECElementEvent, EChartsOption } from 'echarts';
 import { OlympicService } from '@core/services/olympic.service';
 import { Olympic } from '@core/models/Olympic';
 import { CountryMedalsSummary } from '@core/models/CountryMedalsSummary';
-import { IOlympicsStats } from '@components/interfaces/IOlympicsStats.interface';
+import { IOlympicsStats } from '@dashboard/interfaces/IOlympicsStats.interface';
 
 @Component({
   selector: 'app-dashboard',

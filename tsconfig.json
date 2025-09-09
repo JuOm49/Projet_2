@@ -6,7 +6,7 @@
     "paths": {
       "@app/*": ["app/*"],
       "@core/*": ["app/core/*"],
-      "@components/*": ["app/components/*"],
+      "@dashboard/*": ["app/dashboard/*"],
       "@environments/*": ["environments/*"]
     },
     "outDir": "./dist/out-tsc",

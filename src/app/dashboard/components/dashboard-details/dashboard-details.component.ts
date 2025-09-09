@@ -8,7 +8,7 @@ import { EChartsOption } from 'echarts';
 
 import { Olympic } from '@core/models/Olympic';
 import { OlympicService } from '@core/services/olympic.service';
-import { ICountrySummary } from '@components/interfaces/ICountrySummary.interface';
+import { ICountrySummary } from '@dashboard/interfaces/ICountrySummary.interface';
 
 @Component({
   selector: 'app-dashboard-details',

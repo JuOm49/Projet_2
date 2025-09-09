@@ -4,8 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 import { Routes } from '@angular/router';
 
-import { DashboardComponent } from '@components/dashboard/dashboard.component';
-import { SharedModule } from '@components/shared.module';
+import { DashboardComponent } from '@dashboard/components/dashboard/dashboard.component';
+import { SharedModule } from '@dashboard/shared.module';
 
 const routes: Routes = [
   { path: '', component: DashboardComponent }

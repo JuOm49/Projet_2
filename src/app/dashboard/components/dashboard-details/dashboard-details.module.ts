@@ -4,7 +4,7 @@ import { DashboardDetailsComponent } from './dashboard-details.component';
 import { RouterModule, Routes } from '@angular/router';
 import { MatCardModule } from '@angular/material/card';
 
-import { SharedModule } from '@components/shared.module';
+import { SharedModule } from '@dashboard/shared.module';
 
 const routes: Routes = [
   { path: '', component: DashboardDetailsComponent }

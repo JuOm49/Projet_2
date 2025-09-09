@@ -6,11 +6,11 @@ import { NotFoundComponent } from '@core/components/not-found/not-found.componen
 const routes: Routes = [
   {
     path: 'dashboard',
-    loadChildren: () => import('@components/dashboard/dashboard.module').then(m => m.DashboardModule)
+    loadChildren: () => import('@dashboard/components/dashboard/dashboard.module').then(m => m.DashboardModule)
   },
   {
     path: 'dashboard/:id',
-    loadChildren: () => import('@components/dashboard-details/dashboard-details.module').then(m => m.DashboardDetailsModule)
+    loadChildren: () => import('@dashboard/components/dashboard-details/dashboard-details.module').then(m => m.DashboardDetailsModule)
   },
   {
     path: '',

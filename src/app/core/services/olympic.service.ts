@@ -10,7 +10,7 @@ import { Olympic } from '@core/models/Olympic';
   providedIn: 'root',
 })
 export class OlympicService {
-  private olympicUrl = './assets/mock/olympic.json/titi';
+  private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
   private errorData$ = new BehaviorSubject<string | null>(null);
 

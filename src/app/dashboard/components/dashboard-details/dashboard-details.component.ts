@@ -73,7 +73,10 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
   }
 
   private setOlympicCountryInformation(olympic: Olympic | null | undefined) {
-    if(!olympic) return;
+    if(!olympic){
+      this.errorMsg = 'No Olympic data found for this country.';
+      return;
+    } 
 
     // prepare data for the country summary
     this.countrySummary.title = olympic.country;

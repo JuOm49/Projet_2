@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { filter, Observable, of, take, tap, Subscription } from 'rxjs';
+import { filter, take, tap, Subscription } from 'rxjs';
 
 import { ECElementEvent, EChartsOption } from 'echarts';
 

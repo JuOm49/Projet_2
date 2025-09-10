@@ -18,7 +18,6 @@ import { ICountrySummary } from '@dashboard/interfaces/ICountrySummary.interface
 export class DashboardDetailsComponent implements OnInit, OnDestroy {
 
   // for display country details
-  olympicById$!: Observable<Olympic | null | undefined>;
   lineOlympic!: EChartsOption;
   countrySummary: ICountrySummary = {
     title: '',
@@ -34,6 +33,7 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
     dates: 'Dates'
   };
 
+  private olympicById$!: Observable<Olympic | null | undefined>;
   // for the chart
   //tabYears is used for the abscissa X (xAxis)
   private tabYears: number[] = [];
@@ -47,7 +47,7 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
   constructor(private activatedRoute: ActivatedRoute, private route: Router, private olympicsService: OlympicService) { }
 
   ngOnInit(): void {
-    this.getErrorSubscription();
+    this.setErrorSubscription();
     this.loadOlympicDetails();
   }
 
@@ -124,7 +124,7 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
     };
   }
 
-  private getErrorSubscription(): void {
+  private setErrorSubscription(): void {
     this.errorSubscription = this.olympicsService.getErrorData().subscribe(error => {
       if (error) {
         this.errorMsg = error;

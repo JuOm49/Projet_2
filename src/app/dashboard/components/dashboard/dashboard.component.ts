@@ -16,9 +16,6 @@ import { IOlympicsStats } from '@dashboard/interfaces/IOlympicsStats.interface';
   styleUrl: './dashboard.component.scss'
 })
 export class DashboardComponent implements OnInit, OnDestroy {
-  olympics$: Observable<Olympic[]> = of([]);
-  // Data for the pie chart and statistics
-  medalsPerCountry: CountryMedalsSummary[] = [];
   pieCountryMedalsSummary!: EChartsOption;
   olympicsStats: IOlympicsStats = { numberOfCountries: 0, numberOfJos: 0 };
   readonly labelsForInterface = {
@@ -26,20 +23,23 @@ export class DashboardComponent implements OnInit, OnDestroy {
     numberOfCountriesText: 'Number of countries',
     numberOfJosText: 'Number of JOs'
   }
+  // Data for the pie chart and statistics
+  private medalsPerCountry: CountryMedalsSummary[] = [];
 
   // Subscription for error handling
-  private errorSubscription!: Subscription;
   errorMsg: string | null = null;
+  private errorSubscription$!: Subscription;
+  
 
   constructor(private olympicService: OlympicService, private route: Router) {}
     
   ngOnInit(): void {
-    this.getErrorSubscription();
+    this.setErrorSubscription();
     this.setOlympicsInformations();
   }
 
   ngOnDestroy(): void {
-    this.errorSubscription.unsubscribe();
+    this.errorSubscription$.unsubscribe();
   }
 
   onPieClick(event: ECElementEvent): void {
@@ -118,8 +118,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     };
   }
 
-  private getErrorSubscription(): void {
-    this.errorSubscription = this.olympicService.getErrorData().subscribe(error => {
+  private setErrorSubscription(): void {
+    this.errorSubscription$ = this.olympicService.getErrorData().subscribe(error => {
       if (error) {
         this.errorMsg = error;
       }

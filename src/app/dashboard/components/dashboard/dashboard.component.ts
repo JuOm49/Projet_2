@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { filter, take, tap, Subscription } from 'rxjs';
 
 import { ECElementEvent, EChartsOption } from 'echarts';
+import { CallbackDataParams } from 'echarts/types/dist/shared';
 
 import { OlympicService } from '@core/services/olympic.service';
 import { Olympic } from '@core/models/Olympic';
@@ -93,12 +94,19 @@ export class DashboardComponent implements OnInit, OnDestroy {
                   },
         backgroundColor: 'rgb(0, 153, 153)', 
         textStyle: { color: 'white' },
-        formatter: (countryMedalSummary: any) => {
-          return `<div>${countryMedalSummary.name} <br/>
+        formatter: (params: CallbackDataParams | CallbackDataParams[]) => {
+          if (Array.isArray(params)) {
+            return params.map(param => `<div>${param.name} <br/>
+            <span class="medal-img-container">
+            <img src="assets/img/medal.png" alt="medal"/>
+            </span>
+             ${param.value}</div>`).join('');
+          }
+          return `<div>${params.name} <br/>
           <span class="medal-img-container">
           <img src="assets/img/medal.png" alt="medal"/>
           </span>
-           ${countryMedalSummary.value}</div>
+           ${params.value}</div>
           <div class="custom-tooltip-arrow"></div>`;
         }
       },

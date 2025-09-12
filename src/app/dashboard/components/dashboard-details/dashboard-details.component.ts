@@ -5,10 +5,14 @@ import { Router } from '@angular/router';
 import { Observable, Subscription, take, tap } from 'rxjs';
 
 import { EChartsOption } from 'echarts';
+import { CallbackDataParams } from 'echarts/types/dist/shared';
 
 import { Olympic } from '@core/models/Olympic';
 import { OlympicService } from '@core/services/olympic.service';
 import { ICountrySummary } from '@dashboard/interfaces/ICountrySummary.interface';
+
+// type for the tooltip data
+type medalData = { value: number; city: string; athletes: number };
 
 @Component({
   selector: 'app-dashboard-details',
@@ -100,12 +104,21 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
         trigger: 'axis',
         backgroundColor: 'rgb(0, 153, 153)', 
         textStyle: { color: 'white' },
-        formatter: (params: any) => {
-          const param = params[0];
-          return `Medals : ${param.data.value}<br>
-          City : ${param.data.city}<br>
-          Athletes: ${param.data.athletes}`;
-        }
+        formatter: (params: CallbackDataParams | CallbackDataParams[]) => {
+          if (Array.isArray(params)) {
+            return params.map(param => {
+              const data = param.data as medalData;
+              return `<div>${param.name} <br/>
+                Medals : ${data.value}<br/>
+                City : ${data.city}<br/>
+                Athletes: ${data.athletes}</div>`;
+              }).join('');
+          }
+          const data = (params as CallbackDataParams).data as medalData;
+          return `Medals : ${data.value}<br>
+                  City : ${data.city}<br>
+                  Athletes: ${data.athletes}`;
+          }
       },
       xAxis: [
         {

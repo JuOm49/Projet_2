@@ -6,8 +6,11 @@ import { Component, Input } from '@angular/core';
   styleUrl: './error-data.component.scss'
 })
 export class ErrorDataComponent {
-  @Input() errorMsg: string | null = null;
+  @Input() hasError: boolean = false;
 
-  noData: string = 'No data available';
+  readonly labelsForInterface = {
+    NO_DATA: 'No Data available, Please contact the administrator for assistance.',
+    OTHER_ISSUE: 'An unexpected error occurred, Please contact the administrator for assistance.'
+  }
 
 }

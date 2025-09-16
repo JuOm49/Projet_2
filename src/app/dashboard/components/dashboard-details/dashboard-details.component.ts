@@ -46,7 +46,7 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
 
   // for error handling
   private errorSubscription!: Subscription;
-  errorMsg: string | null = null;
+  hasErrorData: boolean = false;
 
   constructor(private activatedRoute: ActivatedRoute, private route: Router, private olympicsService: OlympicService) { }
 
@@ -78,7 +78,7 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
 
   private setOlympicCountryInformation(olympic: Olympic | null | undefined) {
     if(!olympic){
-      this.errorMsg = 'No Olympic data found for this country.';
+      this.hasErrorData = true;
       return;
     } 
 
@@ -143,7 +143,7 @@ export class DashboardDetailsComponent implements OnInit, OnDestroy {
   private setErrorSubscription(): void {
     this.errorSubscription = this.olympicsService.getErrorData().subscribe(error => {
       if (error) {
-        this.errorMsg = error;
+        this.hasErrorData = true;
       }
     });
   }

@@ -12,7 +12,7 @@ import { Olympic } from '@core/models/Olympic';
 export class OlympicService {
   private olympicUrl = './assets/mock/olympic.json';
   private olympics$ = new BehaviorSubject<Olympic[]>([]);
-  private errorData$ = new BehaviorSubject<string | null>(null);
+  private errorData$ = new BehaviorSubject<boolean | null>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class OlympicService {
     return this.http.get<Olympic[]>(this.olympicUrl).pipe(
       tap((value) => this.olympics$.next(value)),
       catchError((error) => {
-        this.errorData$.next(`An error occurred while loading the data : ${error.message}`);
+        this.errorData$.next(true);
         this.olympics$.next([]);
         return EMPTY;
       })

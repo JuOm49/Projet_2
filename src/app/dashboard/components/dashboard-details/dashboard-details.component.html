@@ -1,5 +1,5 @@
 <main>
-  <ng-container *ngIf="!errorMsg; else noDataTemplate">
+  <ng-container *ngIf="!hasErrorData; else noDataTemplate">
     <h2>{{countrySummary.title}}</h2>
 
     <div class="card-content-row">
@@ -25,7 +25,7 @@
   </ng-container>
   
   <ng-template #noDataTemplate>
-      <app-error-data [errorMsg]="errorMsg"></app-error-data>
+      <app-error-data [hasError]="hasErrorData"></app-error-data>
   </ng-template>
 </main>
 

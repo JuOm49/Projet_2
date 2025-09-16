@@ -1,5 +1,5 @@
 <main>
-    <ng-container *ngIf="!errorMsg; else noDataTemplate">
+    <ng-container *ngIf="!hasErrorData; else noDataTemplate">
         <ng-container *ngIf="olympicsStats.numberOfCountries !== 0">
             <h2>{{labelsForInterface.title}}</h2>
 
@@ -21,6 +21,6 @@
     </ng-container>
     
     <ng-template #noDataTemplate>
-        <app-error-data [errorMsg]="errorMsg"></app-error-data>
+        <app-error-data [hasError]="hasErrorData"></app-error-data>
     </ng-template>
 </main>

@@ -28,7 +28,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private medalsPerCountry: CountryMedalsSummary[] = [];
 
   // Subscription for error handling
-  errorMsg: string | null = null;
+  hasErrorData: boolean = false;
   private errorSubscription$!: Subscription;
   
 
@@ -129,7 +129,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   private setErrorSubscription(): void {
     this.errorSubscription$ = this.olympicService.getErrorData().subscribe(error => {
       if (error) {
-        this.errorMsg = error;
+        this.hasErrorData = true;
       }
     });
   }
